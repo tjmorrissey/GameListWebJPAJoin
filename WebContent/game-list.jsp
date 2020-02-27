@@ -23,6 +23,7 @@
 	<td>Name</td>
 	<td>Rating</td>
 	<td>Price</td>
+	<td>Store</td>
 </tr>
 <c:forEach items="${requestScope.allItems}" var="currentitem">
 	<tr>
@@ -30,6 +31,7 @@
 		<td>${currentitem.name}</td>
 		<td>${currentitem.rating}/ 10</td>
 		<td>\$${currentitem.price}</td>
+		<td>${currentitem.store.storeName}</td>
 	</tr>
 </c:forEach>
 </table>
@@ -37,6 +39,10 @@
 <input type="submit" value = "Edit" name="doThisToItem">
 <input type="submit" value = "Delete" name="doThisToItem">
 <input type="submit" value = "Add" name="doThisToItem">
+<br><br><br>
+<a href="viewAllStoreServlet">View List of Stores</a>
+<br><br><br>
+<a href="index.jsp">Main Menu</a>
 </form>
 </body>
 </html>

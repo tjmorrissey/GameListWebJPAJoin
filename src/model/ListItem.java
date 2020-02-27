@@ -1,10 +1,13 @@
 package model;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -21,6 +24,9 @@ public class ListItem {
 	private int rating;
 	@Column(name="PRICE")
 	private double price;
+	@ManyToOne(cascade=CascadeType.PERSIST)
+	@JoinColumn(name="STORE_ID")
+	private StoreDetails store;
 	
 
 	public ListItem() {
@@ -72,6 +78,14 @@ public class ListItem {
 	}
 	
 	
+	public StoreDetails getStore() {
+		return store;
+	}
+
+	public void setStore(StoreDetails store) {
+		this.store = store;
+	}
+
 	public String returnGameDetails() {
 		return name + " | " + rating + "/10 | $" + price;
 	}

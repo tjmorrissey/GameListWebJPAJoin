@@ -1,6 +1,5 @@
 package controller;
 
-
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -8,43 +7,42 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.TypedQuery;
 
-import model.ListItem;
+import model.StoreDetails;
 
-public class ListItemHelper {
+public class StoreHelper {
 
 	static	EntityManagerFactory emfactory = Persistence.createEntityManagerFactory("GameList");
 
-	public void insertItem(ListItem li) {
+	public void insertStore(StoreDetails st) {
 		EntityManager em = emfactory.createEntityManager();
 		em.getTransaction().begin();
-		em.persist(li);
+		em.persist(st);
 		em.getTransaction().commit();
 		em.close();
 	}
 	
-	
-	public List<ListItem> showAllItems() {
+	public List<StoreDetails> showAllStores() {
 		
 		EntityManager em = emfactory.createEntityManager();
-		List<ListItem> allItems = em.createQuery("SELECT i FROM ListItem i").getResultList();
+		List<StoreDetails> allStores = em.createQuery("SELECT i FROM StoreDetails i").getResultList();
 		
-		return allItems;	
+		return allStores;	
 	}
 	
-	public void deleteItem(ListItem	toDelete) {
+	public void deleteStore(StoreDetails toDelete) {
 		EntityManager em = emfactory.createEntityManager();
 		em.getTransaction().begin();
 		
-		TypedQuery<ListItem> typedQuery = em.createQuery("select li from ListItem li where li.name = :selectedGame", ListItem.class);
+		TypedQuery<StoreDetails> typedQuery = em.createQuery("select li from StoreDetails li where li.storeName = :selectedStore", StoreDetails.class);
 		
 		//Substitute parameter with actual data	from the toDelete item
-		typedQuery.setParameter("selectedGame", toDelete.getName());
+		typedQuery.setParameter("selectedStore", toDelete.getStoreName());
 		
 		//we only want one result
 		typedQuery.setMaxResults(1);
 		
 		//get the result and save it into a new list item
-		ListItem result = typedQuery.getSingleResult();
+		StoreDetails result = typedQuery.getSingleResult();
 		
 		//remove it
 		em.remove(result);
@@ -52,18 +50,18 @@ public class ListItemHelper {
 		em.close();
 		}
 
-	public ListItem searchForItemById(int idToEdit) {
+	public StoreDetails searchForStoreById(int idToEdit) {
 		EntityManager em = emfactory.createEntityManager();
 		em.getTransaction().begin();
 		
-		ListItem found = em.find(ListItem.class, idToEdit);
+		StoreDetails found = em.find(StoreDetails.class, idToEdit);
 		
 		em.close();
 		
 		return found;
 	}
 
-	public void updateItem(ListItem toEdit) {
+	public void updateStore(StoreDetails toEdit) {
 		EntityManager em = emfactory.createEntityManager();
 		em.getTransaction().begin();
 		
@@ -74,13 +72,13 @@ public class ListItemHelper {
 		
 	}
 
-	public List<ListItem> searchForItemByName(String gameName) {
+	public List<StoreDetails> searchForStoreByName(String gameName) {
 		EntityManager em = emfactory.createEntityManager();
 		em.getTransaction().begin();
 		
-		TypedQuery<ListItem> typedQuery = em.createQuery("select li	from ListItem li where li.name = :selectedGame", ListItem.class);
-		typedQuery.setParameter("selectedGame", gameName);
-		List<ListItem> foundItems = typedQuery.getResultList();
+		TypedQuery<StoreDetails> typedQuery = em.createQuery("select li	from StoreDetails li where li.name = :selectedStore", StoreDetails.class);
+		typedQuery.setParameter("selectedStore", gameName);
+		List<StoreDetails> foundItems = typedQuery.getResultList();
 		
 		em.close();
 		

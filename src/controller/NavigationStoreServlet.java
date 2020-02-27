@@ -7,19 +7,19 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import model.ListItem;
+import model.StoreDetails;
 
 /**
- * Servlet implementation class NavigationServlet
+ * Servlet implementation class NavigationStoreServlet
  */
-@WebServlet("/navigationServlet")
-public class NavigationServlet extends HttpServlet {
+@WebServlet("/navigationStoreServlet")
+public class NavigationStoreServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public NavigationServlet() {
+    public NavigationStoreServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -37,35 +37,35 @@ public class NavigationServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-		ListItemHelper game = new ListItemHelper();
-		String act = request.getParameter("doThisToItem");
+		StoreHelper store = new StoreHelper();
+		String act = request.getParameter("doThisToStore");
 		
 		//Where to redirect to, will only change if wanting to add
-		String path = "/viewAllItemsServlet";
+		String path = "/viewAllStoreServlet";
 		
 		if(act.equals("Delete")) {
 			try {
-				Integer tempId = Integer.parseInt(request.getParameter("id"));
-				ListItem itemToDelete = game.searchForItemById(tempId);
-				game.deleteItem(itemToDelete);
+				Integer tempId = Integer.parseInt(request.getParameter("storeId"));
+				StoreDetails storeToDelete = store.searchForStoreById(tempId);
+				store.deleteStore(storeToDelete);
 			}
 			catch (NumberFormatException e) {
-				System.out.println("Forgot to select an item");
+				System.out.println("Forgot to select a store");
 			}
 		}
 		else if(act.equals("Edit")) {
 			try {
-				Integer tempId = Integer.parseInt(request.getParameter("id"));
-				ListItem itemToEdit = game.searchForItemById(tempId);
-				request.setAttribute("itemToEdit", itemToEdit);
-				path = "/edit-item.jsp";
+				Integer tempId = Integer.parseInt(request.getParameter("storeId"));
+				StoreDetails storeToEdit = store.searchForStoreById(tempId);
+				request.setAttribute("storeToEdit", storeToEdit);
+				path = "/edit-store.jsp";
 			}
 			catch (NumberFormatException e){
-				System.out.println("Forgot to select an item");
+				System.out.println("Forgot to select a store");
 			}
 		}
 		else if(act.equals("Add")) {
-			path = "/addStoreToGameServlet";
+			path = "/add-store.html";
 		}
 		
 		getServletContext().getRequestDispatcher(path).forward(request, response);

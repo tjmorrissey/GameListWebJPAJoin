@@ -5,15 +5,14 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
-<title>Edit Item</title>
+<title>Edit Store</title>
 </head>
 <body>
-<h3>Edit an Item</h3>
-<form action="editItemServlet" method="post">
-Name: <input type="text" name="name" value="${itemToEdit.name}"> <br>
-Rating: <input type="text" name="rating" value="${itemToEdit.rating}"> <br>
-Price: <input type="text" name="price" value="${itemToEdit.price}"> <br>
-<input type="hidden" name="id" value="${itemToEdit.id}">
+<h3>Edit a Store</h3>
+<form action="editStoreServlet" method="post">
+Store Name: <input type="text" name="storeName" value="${storeToEdit.storeName}"> <br>
+Address: <input type="text" name="address" value="${storeToEdit.address}"> <br>
+<input type="hidden" name="storeId" value="${storeToEdit.storeId}">
 <br>
 <input type="submit" value="Save Edited Game">
 <br><br><br>

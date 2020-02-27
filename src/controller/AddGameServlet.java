@@ -1,6 +1,7 @@
 package controller;
 
 import java.io.IOException;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -8,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import model.ListItem;
+import model.StoreDetails;
 
 /**
  * Servlet implementation class AddGameServlet
@@ -24,6 +26,7 @@ public class AddGameServlet extends HttpServlet {
         // TODO Auto-generated constructor stub
     }
 
+
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
@@ -33,17 +36,27 @@ public class AddGameServlet extends HttpServlet {
 		String ratingSting = request.getParameter("rating");
 		String priceString = request.getParameter("price");
 		
+		int storeId = Integer.parseInt(request.getParameter("stores"));
+		
 		//convert inputs to integer, and double
 		int rating = Integer.parseInt(ratingSting);
 		double price = Double.parseDouble(priceString);
 		
 		
 		ListItem li = new ListItem(name, rating, price);
+		
+		StoreHelper sh = new StoreHelper();
+		StoreDetails sd = new StoreDetails();
+		
+		sd = sh.searchForStoreById(storeId);
+		
+		li.setStore(sd);
+		
 		ListItemHelper game = new ListItemHelper();
 		
 		game.insertItem(li);
 		
-		getServletContext().getRequestDispatcher("/index.html").forward(request, response);
+		getServletContext().getRequestDispatcher("/addStoreToGameServlet").forward(request, response);
 		
 	}
 
